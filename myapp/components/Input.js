@@ -20,16 +20,20 @@ export default function Input({ onAdd, modal, onCancel }) {
           placeholder="enter some words"
         />
         <View style={styles.buttons}>
-          <Button
-            title='Cancel'
-            onPress={() => {
-              onAdd(text);
-              setText("")
-            }}>
-          </Button>
-          <Button
-            title='Confirm'
-            onPress={onCancel} />
+          <View style={styles.button}>
+            <Button
+              title='Cancel'
+              onPress={() => {
+                onAdd(text);
+                setText("")
+              }} />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title='Confirm'
+              onPress={onCancel}
+              disabled={text.length ? false : true} />
+          </View>
         </View>
       </View>
     </Modal>
@@ -49,8 +53,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     padding: 10,
   },
-  buttons:{
-    margin:10,
-    flexDirection:'row'
+  buttons: {
+    margin: 10,
+    flexDirection: 'row'
+  },
+  button: {
+    width: '30%',
   }
 });
