@@ -8,8 +8,12 @@ export default function Input({ onAdd, modal, onCancel }) {
   return (
     <Modal visible={modal}>
       <View style={styles.container}>
-        <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
-          style={{ width: 100, height: 100 }} />
+        {/* <Image source={require('../assets/img/target.png')}
+        
+          style={{ width: 100, height: 100 }} /> */}
+        <Image source={{uri:'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}}
+        
+        style={{ width: 100, height: 100 }} />
         <TextInput
           style={styles.input}
           onChangeText={(newText) => { setText(newText) }}
