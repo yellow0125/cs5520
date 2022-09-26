@@ -1,4 +1,4 @@
-import { View, TextInput, Button, StyleSheet, Modal } from 'react-native'
+import { View, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'
 import React, { useState } from 'react'
 
 
@@ -8,6 +8,8 @@ export default function Input({ onAdd, modal, onCancel }) {
   return (
     <Modal visible={modal}>
       <View style={styles.container}>
+        <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+          style={{ width: 100, height: 100 }} />
         <TextInput
           style={styles.input}
           onChangeText={(newText) => { setText(newText) }}
@@ -22,10 +24,8 @@ export default function Input({ onAdd, modal, onCancel }) {
           }}>
         </Button>
         <Button
-        title='Cancel'
-        onPress={onCancel}>
-
-        </Button>
+          title='Cancel'
+          onPress={onCancel} />
       </View>
     </Modal>
   )
