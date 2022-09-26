@@ -11,25 +11,27 @@ export default function Input({ onAdd, modal, onCancel }) {
         {/* <Image source={require('../assets/img/target.png')}
         
           style={{ width: 100, height: 100 }} /> */}
-        <Image source={{uri:'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}}
-        
-        style={{ width: 100, height: 100 }} />
+        <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+
+          style={{ width: 100, height: 100 }} />
         <TextInput
           style={styles.input}
           onChangeText={(newText) => { setText(newText) }}
           value={text}
           placeholder="enter some words"
         />
-        <Button
-          title='Confirm'
-          onPress={() => {
-            onAdd(text);
-            setText("")
-          }}>
-        </Button>
-        <Button
-          title='Cancel'
-          onPress={onCancel} />
+        <View style={styles.buttons}>
+          <Button
+            title='Confirm'
+            onPress={() => {
+              onAdd(text);
+              setText("")
+            }}>
+          </Button>
+          <Button
+            title='Cancel'
+            onPress={onCancel} />
+        </View>
       </View>
     </Modal>
   )
@@ -45,7 +47,10 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
+    borderBottomWidth: 2,
     padding: 10,
   },
+  buttons:{
+    margin:10,
+  }
 });
