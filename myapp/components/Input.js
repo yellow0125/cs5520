@@ -1,29 +1,43 @@
-import { View, Text, TextInput, Button } from 'react-native'
+import { View, TextInput, Button, StyleSheet, Modal } from 'react-native'
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native';
 
-export default function Input({onAdd}) {
+
+export default function Input({ onAdd, modal, onCancel }) {
   const [text, setText] = useState('')
 
   return (
-    <View>
-      <TextInput
-        style={styles.input}
-        onChangeText={(newText)=>{setText(newText)}}
-        value={text}
-        placeholder="enter some words"
-      />
-      <Button 
-        title='Confirm' 
-        onPress={() => 
-          {onAdd(text);
-        setText("")}}>
+    <Modal visible={modal}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(newText) => { setText(newText) }}
+          value={text}
+          placeholder="enter some words"
+        />
+        <Button
+          title='Confirm'
+          onPress={() => {
+            onAdd(text);
+            setText("")
+          }}>
         </Button>
-    </View>
+        <Button
+        title='Cancel'
+        onPress={onCancel}>
+
+        </Button>
+      </View>
+    </Modal>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'lightblue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   input: {
     height: 40,
     margin: 12,
