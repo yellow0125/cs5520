@@ -21,14 +21,14 @@ export default function Input({ onAdd, modal, onCancel }) {
         />
         <View style={styles.buttons}>
           <Button
-            title='Confirm'
+            title='Cancel'
             onPress={() => {
               onAdd(text);
               setText("")
             }}>
           </Button>
           <Button
-            title='Cancel'
+            title='Confirm'
             onPress={onCancel} />
         </View>
       </View>
