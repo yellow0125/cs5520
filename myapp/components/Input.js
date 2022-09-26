@@ -1,7 +1,6 @@
 import { View, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'
 import React, { useState } from 'react'
 
-
 export default function Input({ onAdd, modal, onCancel }) {
   const [text, setText] = useState('')
 
@@ -52,5 +51,6 @@ const styles = StyleSheet.create({
   },
   buttons:{
     margin:10,
+    flexDirection:'row'
   }
 });
