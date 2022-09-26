@@ -21,7 +21,9 @@ export default function App() {
         <Button title='Add a Goal' onPress={makeModalVisible}></Button>
       </View>
       <View style={styles.bottomContainer}>
-        <Text>You typed...</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>You typed...</Text>
+        </View>
       </View>
       <Input modal={modalVisible} onAdd={onTextAdd} onCancel={makeModalInvisible} />
       <StatusBar style="auto" />
@@ -43,12 +45,17 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: 'pink',
     alignItems: 'center',
+
+  },
+  textContainer: {
+    borderRadius: 5,
+    backgroundColor: 'grey',
+    borderWidth: 1,
   },
   text: {
     textAlign: "center",
     fontSize: 13,
     fontWeight: 'bold',
-    color: 'lightblue',
 
   },
 });

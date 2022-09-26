@@ -6,9 +6,7 @@ export default function Header(props){
     <View>
       <Text style={styles.title}>Open up App.js to start working on your app {props.appName}!</Text>
     </View>
-
   )
-
 }
 
 const styles = StyleSheet.create({
@@ -17,6 +15,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize:13,
     fontWeight:'bold',
-    color:'red'
+    color:'purple',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor:'purple',
+    padding:5,
   },
 });
