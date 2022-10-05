@@ -7,31 +7,31 @@ export default function Input({ onAdd, modal, onCancel }) {
   return (
     <Modal visible={modal}>
       <View style={styles.container}>
-        {/* <Image source={require('../assets/img/target.png')}
+        <Image source={require('../assets/img/target.png')}
         
-          style={{ width: 100, height: 100 }} /> */}
-        <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+        style={styles.image} />
+        {/* <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
 
-          style={{ width: 100, height: 100 }} />
+          style={{ width: 100, height: 100 }} /> */}
         <TextInput
           style={styles.input}
           onChangeText={(newText) => { setText(newText) }}
           value={text}
-          placeholder="enter some words"
+          placeholder="type something"
         />
         <View style={styles.buttons}>
           <View style={styles.button}>
             <Button
               title='Cancel'
-              onPress={() => {
-                onAdd(text);
-                setText("")
-              }} />
+              onPress={onCancel} />
           </View>
           <View style={styles.button}>
             <Button
               title='Confirm'
-              onPress={onCancel}
+              onPress={() => {
+                onAdd(text)
+                setText("")
+              }}
               disabled={text.length ? false : true} />
           </View>
         </View>
@@ -48,16 +48,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    height: 40,
-    margin: 12,
+    color: "#ff00ff",
     borderBottomWidth: 2,
-    padding: 10,
+    borderBottomColor: "purple",
+    margin: 5,
   },
   buttons: {
-    margin: 10,
     flexDirection: 'row'
   },
   button: {
+    margin: 5,
     width: '30%',
-  }
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
 });

@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Button,
   SafeAreaView,
@@ -16,7 +15,7 @@ export default function App() {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
 
-  const onTextAdd = function (nexText) {
+  const onTextAdd = function (newText) {
     const newGoal = { text: newText, key: Math.random() }
     setGoals((prevgoals) => {
       return [...prevgoals, newGoal]
@@ -29,6 +28,11 @@ export default function App() {
   const makeModalVisible = () => { setModalVisible(true) }
   const makeModalInvisible = () => { setModalVisible(false) }
 
+  function onDelete(deletedKey) {
+    console.log('delete pressed ', deletedKey)
+    setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -38,12 +42,13 @@ export default function App() {
 
       <View style={styles.bottomContainer}>
         <FlatList data={goals}
-        renderItem ={({item})=>{
-          console.log(item)
-          return(
-            <GoalItem goals={item}/>
-          )}}
-          contentContainerStyle ={styles.scrollViewItems}>
+          renderItem={({ item }) => {
+            console.log(item)
+            return (
+              <GoalItem goal={item} onDelete={onDelete} />
+            )
+          }}
+          contentContainerStyle={styles.scrollViewItems}>
         </FlatList>
       </View>
       <Input
@@ -63,13 +68,12 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   bottomContainer: {
     flex: 4,
     backgroundColor: 'pink',
-    alignItems: 'center',
-
   },
   scrollViewItems: {
     alignItems: "center",
@@ -78,11 +82,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'grey',
     borderWidth: 1,
+    padding: 5,
+    margin: 10,
   },
   text: {
     textAlign: "center",
     fontSize: 13,
     fontWeight: 'bold',
-
   },
 });
