@@ -1,11 +1,13 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
+import {Ionicons} from "@expo/vector-icons"
 
 export default function DeleteButton({onButtonPressed}) {
   return (
     <Pressable onPress={onButtonPressed}>
       <View style={styles.button}>
-        <Text>X</Text>
+        <Ionicons name='trash' size={24} color='black'/>
+        {/* <Text>X</Text> */}
       </View>
     </Pressable>
   )

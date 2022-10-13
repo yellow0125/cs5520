@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import DeleteButton from "./DeleteButton";
 
@@ -22,11 +22,6 @@ export default function GoalItem({ goal, onDelete, onItemPress }) {
       <View style={styles.goalTextContainer}>
         <Text style={styles.goalText}> {goal.text} </Text>
         <View style={styles.button}>
-          {/* <Button
-            title="X"
-            onPress={() => onDelete(goal.key)}
-            color="#444"
-          /> */}
           <DeleteButton onButtonPressed={deletePressed} />
         </View>
       </View>
