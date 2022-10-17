@@ -11,7 +11,7 @@ import Header from './Header';
 import Input from "./Input";
 import GoalItem from './GoalItem';
 
-export default function App() {
+export default function Home({navigation}) {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
 
@@ -34,6 +34,7 @@ export default function App() {
   }
   function itemPressed() {
     console.log("Item pressed")
+    navigation.navigate('GoalDetails')
 
   }
 
