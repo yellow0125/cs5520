@@ -32,6 +32,10 @@ export default function App() {
     console.log('delete pressed ', deletedKey)
     setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
   }
+  function itemPressed() {
+    console.log("Item pressed")
+
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,9 +47,9 @@ export default function App() {
       <View style={styles.bottomContainer}>
         <FlatList data={goals}
           renderItem={({ item }) => {
-            console.log(item)
+            // console.log(item)
             return (
-              <GoalItem goal={item} onDelete={onDelete} />
+              <GoalItem goal={item} onDelete={onDelete} onItemPress={itemPressed} />
             )
           }}
           contentContainerStyle={styles.scrollViewItems}>
