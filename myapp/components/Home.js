@@ -32,9 +32,9 @@ export default function Home({navigation}) {
     console.log('delete pressed ', deletedKey)
     setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
   }
-  function itemPressed() {
+  function itemPressed(goal) {
     console.log("Item pressed")
-    navigation.navigate('GoalDetails')
+    navigation.navigate('GoalDetails', {goalObj:goal})
 
   }
 

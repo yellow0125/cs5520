@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function GoalDetails() {
+export default function GoalDetails({route}) {
   return (
     <View>
-      <Text>GoalDetails</Text>
+      <Text>You are viewing details of {route.params.goalObj.text}</Text>
     </View>
   )
 }
