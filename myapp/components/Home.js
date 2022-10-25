@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,10 +11,20 @@ import Header from './Header';
 import Input from "./Input";
 import GoalItem from './GoalItem';
 import { writeToDB } from '../firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase-setup';
 
 export default function Home({ navigation }) {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
+
+  useEffect(() => {
+    onSnapshot(collection(firestore,"goals"), (querySnapshot)=>{
+      querySnapshot.docs
+
+    })
+
+   })
 
   const onTextAdd = async function (newText) {
     const newGoal = { text: newText, key: Math.random() };
