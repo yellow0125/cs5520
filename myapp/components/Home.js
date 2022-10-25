@@ -10,13 +10,15 @@ import {
 import Header from './Header';
 import Input from "./Input";
 import GoalItem from './GoalItem';
+import { writeToDB } from '../firebase/firestore';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
 
-  const onTextAdd = function (newText) {
-    const newGoal = { text: newText, key: Math.random() }
+  const onTextAdd = async function (newText) {
+    const newGoal = { text: newText, key: Math.random() };
+    await writeToDB({ text: newText })
     setGoals((prevgoals) => {
       return [...prevgoals, newGoal]
 
@@ -34,7 +36,7 @@ export default function Home({navigation}) {
   }
   function itemPressed(goal) {
     console.log("Item pressed")
-    navigation.navigate('GoalDetails', {goalObj:goal})
+    navigation.navigate('GoalDetails', { goalObj: goal })
 
   }
 
