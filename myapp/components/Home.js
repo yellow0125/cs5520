@@ -19,20 +19,31 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([])
 
   useEffect(() => {
-    onSnapshot(collection(firestore,"goals"), (querySnapshot)=>{
-      querySnapshot.docs
-
+    const unsubscribe = onSnapshot(collection(firestore, "goals"), (querySnapshot) => {
+      if (querySnapshot.empty) {
+        setGoals([]);
+        return;
+      }
+      setGoals(
+        querySnapshot.docs.map((snapDoc) => {
+          let data = snapDoc.data();
+          data = { ...data, key: snapDoc.id };
+          return data;
+        })
+      )
     })
-
-   })
+    return () => {
+      unsubscribe();
+    };
+  }, [])
 
   const onTextAdd = async function (newText) {
     const newGoal = { text: newText, key: Math.random() };
     await writeToDB({ text: newText })
-    setGoals((prevgoals) => {
-      return [...prevgoals, newGoal]
+    // setGoals((prevgoals) => {
+    //   return [...prevgoals, newGoal]
 
-    })
+    // })
     setModalVisible(false)
   }
 
