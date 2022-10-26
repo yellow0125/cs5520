@@ -10,7 +10,7 @@ import {
 import Header from './Header';
 import Input from "./Input";
 import GoalItem from './GoalItem';
-import { writeToDB } from '../firebase/firestore';
+import { writeToDB, deleteFromDB } from '../firebase/firestore';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { firestore } from '../firebase/firebase-setup';
 
@@ -51,9 +51,10 @@ export default function Home({ navigation }) {
   const makeModalVisible = () => { setModalVisible(true) }
   const makeModalInvisible = () => { setModalVisible(false) }
 
-  function onDelete(deletedKey) {
-    console.log('delete pressed ', deletedKey)
-    setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
+  async function onDelete(deletedKey) {
+    // console.log('delete pressed ', deletedKey)
+    // setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
+    await deleteFromDB(deletedKey);
   }
   function itemPressed(goal) {
     console.log("Item pressed")
