@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,17 +10,40 @@ import {
 import Header from './Header';
 import Input from "./Input";
 import GoalItem from './GoalItem';
+import { writeToDB, deleteFromDB } from '../firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase-setup';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
 
-  const onTextAdd = function (newText) {
-    const newGoal = { text: newText, key: Math.random() }
-    setGoals((prevgoals) => {
-      return [...prevgoals, newGoal]
-
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(firestore, "goals"), (querySnapshot) => {
+      if (querySnapshot.empty) {
+        setGoals([]);
+        return;
+      }
+      setGoals(
+        querySnapshot.docs.map((snapDoc) => {
+          let data = snapDoc.data();
+          data = { ...data, key: snapDoc.id };
+          return data;
+        })
+      )
     })
+    return () => {
+      unsubscribe();
+    };
+  }, [])
+
+  const onTextAdd = async function (newText) {
+    const newGoal = { text: newText, key: Math.random() };
+    await writeToDB({ text: newText })
+    // setGoals((prevgoals) => {
+    //   return [...prevgoals, newGoal]
+
+    // })
     setModalVisible(false)
   }
 
@@ -28,13 +51,14 @@ export default function Home({navigation}) {
   const makeModalVisible = () => { setModalVisible(true) }
   const makeModalInvisible = () => { setModalVisible(false) }
 
-  function onDelete(deletedKey) {
-    console.log('delete pressed ', deletedKey)
-    setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
+  async function onDelete(deletedKey) {
+    // console.log('delete pressed ', deletedKey)
+    // setGoals(goals.filter((goal) => { return goal.key != deletedKey }))
+    await deleteFromDB(deletedKey);
   }
   function itemPressed(goal) {
     console.log("Item pressed")
-    navigation.navigate('GoalDetails', {goalObj:goal})
+    navigation.navigate('GoalDetails', { goalObj: goal })
 
   }
 
