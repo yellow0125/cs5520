@@ -1,24 +1,33 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, useWindowDimensions, Platform } from 'react-native'
 import React from 'react'
 
-export default function Header(props){
-  return(
-    <View>
-      <Text style={styles.title}>Open up App.js to start working on your app {props.appName}!</Text>
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+export default function Header({ appName }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to {appName}!</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  title:{
-    alignSelf: "center",
+  container: {
     justifyContent: 'center',
-    fontSize:13,
-    fontWeight:'bold',
-    color:'purple',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor:'purple',
-    padding:5,
+    width: 350,
+    maxWidth: '90%'
+  },
+  title: {
+    color: 'rebeccapurple',
+    fontWeight: 'bold',
+    borderStyle: 'dotted',
+    borderColor: 'slateblue',
+    borderWidth: Platform.select({ ios: 0, android: 8 }),
+    fontSize: windowWidth < 380 ? 18 : 22,
+    paddingHorizontal: windowWidth < 380 ? 10 : 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    textAlign: 'center'
   },
 });
