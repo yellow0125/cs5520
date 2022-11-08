@@ -110,13 +110,11 @@ const styles = StyleSheet.create({
   textContainer: {
     borderRadius: 5,
     backgroundColor: 'grey',
-    borderWidth: 1,
-    padding: 5,
-    margin: 10,
+    color: "blue",
+    padding: 30,
+    margin: 30,
   },
   text: {
-    textAlign: "center",
-    fontSize: 13,
-    fontWeight: 'bold',
+    fontSize: 12,
   },
 });
