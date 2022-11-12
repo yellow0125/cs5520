@@ -36,7 +36,7 @@ export default function GoalDetails({ route }) {
         throw new Error("post fetch faile")
       }
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setUsers(prevUsers => [...prevUsers, data])
     } catch (err) { console.log(err) }
   };
