@@ -11,27 +11,36 @@ import Header from './Header';
 import Input from "./Input";
 import GoalItem from './GoalItem';
 import { writeToDB, deleteFromDB } from '../firebase/firestore';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { firestore } from '../firebase/firebase-setup';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { firestore, auth } from '../firebase/firebase-setup';
 
 export default function Home({ navigation }) {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(firestore, "goals"), (querySnapshot) => {
-      if (querySnapshot.empty) {
-        setGoals([]);
-        return;
+    const unsubscribe = onSnapshot(
+      query(
+        collection(firestore, "goals"),
+        where("user", "==", auth.currentUser.uid)
+      ),
+      (querySnapshot) => {
+        if (querySnapshot.empty) {
+          setGoals([]);
+          return;
+        }
+        setGoals(
+          querySnapshot.docs.map((snapDoc) => {
+            let data = snapDoc.data();
+            data = { ...data, key: snapDoc.id };
+            return data;
+          })
+        );
+      },
+      (err) => {
+        console.log(err);
       }
-      setGoals(
-        querySnapshot.docs.map((snapDoc) => {
-          let data = snapDoc.data();
-          data = { ...data, key: snapDoc.id };
-          return data;
-        })
-      )
-    })
+    )
     return () => {
       unsubscribe();
     };

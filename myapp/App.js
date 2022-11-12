@@ -82,7 +82,7 @@ export default function App() {
           component={GoalDetails}
           options={({ route, navigation }) => {
             return {
-              title: route.params.goalObject.text,
+              title: route.params.goalObj.text,
               headerRight: rightButton,
             };
           }}
