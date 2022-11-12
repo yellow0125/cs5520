@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-
-export default function Profile() {
+import { View, Text } from "react-native";
+import React from "react";
+import { auth } from "../firebase/firebase-setup";
+export default function () {
   return (
     <View>
-      <Text>Profile</Text>
+      <Text>{auth.currentUser.email}</Text>
+      <Text>{auth.currentUser.uid}</Text>
     </View>
-  )
+  );
 }
