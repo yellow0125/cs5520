@@ -1,4 +1,4 @@
-import { View, Text, Button,FlatList } from 'react-native'
+import { View, Text, Button,FlatList, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { storage } from "../firebase/firebase-setup";
 import { getDownloadURL, ref } from "firebase/storage";
