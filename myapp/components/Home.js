@@ -12,8 +12,8 @@ import Input from "./Input";
 import GoalItem from './GoalItem';
 import { writeToDB, deleteFromDB } from '../firebase/firestore';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { firestore, auth } from '../firebase/firebase-setup';
-
+import { firestore, auth, storage } from '../firebase/firebase-setup';
+import { ref, uploadBytes } from "firebase/storage";
 export default function Home({ navigation }) {
   const name = 'fridaynight'
   const [goals, setGoals] = useState([])
@@ -46,17 +46,39 @@ export default function Home({ navigation }) {
     };
   }, [])
 
-  const onTextAdd = async function (newText) {
-    const newGoal = { text: newText, key: Math.random() };
-    await writeToDB({ text: newText })
-    // setGoals((prevgoals) => {
-    //   return [...prevgoals, newGoal]
-
-    // })
-    setModalVisible(false)
-  }
-
   const [modalVisible, setModalVisible] = useState(false)
+
+  const getImage = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      if(!response.ok){
+        throw new Error('image fetch request failed')
+      }
+      const blob = await response.blob();
+      return blob;
+    } catch (err) {
+      console.log("fetch image ", err);
+    }
+  };
+
+  const onTextAdd = async function (newObj) {
+    const uri = newObj.uri;
+    try {
+      if (uri) {
+        const imageBlob = await getImage(uri);
+        const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+        const imageRef = await ref(storage, `images/${imageName}`);
+        const uploadResult = await uploadBytes(imageRef, imageBlob);
+        newObj.uri = uploadResult.metadata.fullPath; //replaced the uri with reference to the storage location
+      }
+      await writeToDB(newObj);
+    } catch (err) {
+      console.log("image upload ", err);
+    }
+    setModalVisible(false);
+  };
+
+  
   const makeModalVisible = () => { setModalVisible(true) }
   const makeModalInvisible = () => { setModalVisible(false) }
 

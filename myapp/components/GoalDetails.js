@@ -1,8 +1,28 @@
 import { View, Text, Button,FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { storage } from "../firebase/firebase-setup";
+import { getDownloadURL, ref } from "firebase/storage";
 
 export default function GoalDetails({ route }) {
   const [users, setUsers] = useState([]);
+  const [imageURL, setImageURL] = useState("");
+  const goal = route.params.goalObj;
+
+  useEffect(() => {
+    const getImageURL = async () => {
+      try {
+        if (goal.uri) {
+          const reference = ref(storage, goal.uri);
+          const downloadImageURL = await getDownloadURL(reference);
+          setImageURL(downloadImageURL);
+        }
+      } catch (err) {
+        console.log("download image ", err);
+      }
+    };
+    getImageURL();
+  }, []);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -48,6 +68,9 @@ export default function GoalDetails({ route }) {
   return (
     <View>
       <Text>You are viewing details of {route.params.goalObj.text}</Text>
+      {imageURL && (
+        <Image source={{ uri: imageURL }} style={{ width: 100, height: 100 }} />
+      )}
       <Button title="Add User" onPress={addUser} />
       <FlatList data={users} renderItem={({ item }) => {
         return <Text>{item.name}</Text>
