@@ -61,6 +61,7 @@ export default function LocationManager() {
   const locationPickerHandler = () => {
     navigation.navigate("Map", { initialLocation: location });
   };
+  
   const saveUserLocation = async () => {
     await saveUser(location);
   };
