@@ -1,15 +1,20 @@
 import { View, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'
 import React, { useState } from 'react'
+import ImageManager from './ImageManager'
 
 export default function Input({ onAdd, modal, onCancel }) {
   const [text, setText] = useState('')
-
+  const [uri, setUri] = useState("");
+  const imageHandler = (uri) => {
+    console.log("imageHandler called", uri);
+    setUri(uri);
+  };
   return (
     <Modal visible={modal}>
       <View style={styles.container}>
         <Image source={require('../assets/img/target.png')}
-        
-        style={styles.image} />
+
+          style={styles.image} />
         {/* <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
 
           style={{ width: 100, height: 100 }} /> */}
@@ -19,6 +24,7 @@ export default function Input({ onAdd, modal, onCancel }) {
           value={text}
           placeholder="type something"
         />
+        <ImageManager imageHandler={imageHandler} />
         <View style={styles.buttons}>
           <View style={styles.button}>
             <Button
@@ -29,7 +35,7 @@ export default function Input({ onAdd, modal, onCancel }) {
             <Button
               title='Confirm'
               onPress={() => {
-                onAdd(text)
+                onAdd({text, uri})
                 setText("")
               }}
               disabled={text.length ? false : true} />
